@@ -85,3 +85,59 @@ Properti yang tidak dikirim tidak diubah.
 - `POST` tanpa `nama` atau `nim` mengembalikan `422 Unprocessable Entity`. `PUT` juga membutuhkan keduanya.
 - `DELETE` yang berhasil mengembalikan `204 No Content`; responsnya memang tidak memiliki body.
 - Pesan request dan error dari Node.js dapat dilihat di terminal tempat server dijalankan. Untuk melihat perubahan data, kirim request `GET /mahasiswa` setelah operasi `POST`, `PUT`, `PATCH`, atau `DELETE`.
+
+## Debug API menggunakan Google Chrome DevTools
+
+Request API juga dapat dicoba langsung dari **Console** di Google Chrome DevTools menggunakan `fetch`.
+
+1. Pastikan server berjalan dengan perintah `node server.js` di terminal.
+2. Buka `http://localhost:3000/mahasiswa` di Google Chrome. Halaman akan menampilkan respons daftar mahasiswa.
+3. Buka DevTools dengan menekan **F12** atau **Ctrl+Shift+I** (Windows/Linux), lalu pilih tab **Console**.
+4. Salin salah satu contoh request di bawah, tempelkan di Console, lalu tekan **Enter**.
+5. Periksa hasilnya di Console. Untuk melihat data terbaru, muat ulang halaman atau jalankan `fetch("/mahasiswa").then(res => res.json()).then(console.log)` di Console.
+
+Contoh berikut menggunakan URL relatif seperti `/mahasiswa`. Karena itu, Console harus berasal dari halaman di `http://localhost:3000` agar request dikirim ke server API ini.
+
+### POST — menambahkan mahasiswa
+
+```javascript
+fetch("/mahasiswa", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ nama: "Dewi", nim: "23104417" })
+}).then(res => { console.log(res.status); return res.json(); }).then(console.log);
+```
+
+Jika berhasil, status `201` dan data mahasiswa baru akan tampil. ID mahasiswa baru akan bertambah otomatis.
+
+### PUT — mengganti seluruh data mahasiswa dengan ID 1
+
+```javascript
+fetch("/mahasiswa/1", {
+  method: "PUT",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ nama: "Budiman Santoso", nim: "23104414" })
+}).then(res => res.json()).then(console.log);
+```
+
+Kirim `nama` dan `nim` karena `PUT` mengganti seluruh data. Jika ID tidak ditemukan, API mengembalikan status `404`.
+
+### PATCH — mengubah sebagian data mahasiswa dengan ID 1
+
+```javascript
+fetch("/mahasiswa/1", {
+  method: "PATCH",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ nama: "Budiman S." })
+}).then(res => res.json()).then(console.log);
+```
+
+Properti yang tidak dikirim, seperti `nim`, tidak berubah.
+
+### DELETE — menghapus mahasiswa dengan ID 2
+
+```javascript
+fetch("/mahasiswa/2", { method: "DELETE" }).then(res => console.log(res.status));
+```
+
+Jika berhasil, Console menampilkan status `204`. Respons `204 No Content` memang tidak memiliki body.
