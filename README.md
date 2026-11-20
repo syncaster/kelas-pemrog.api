@@ -13,22 +13,25 @@ Setelah mengikuti materi, mahasiswa diharapkan mampu:
 - menguji endpoint dan memeriksa respons menggunakan Postman;
 - memahami alur integrasi payment gateway Midtrans dengan memperhatikan keamanan transaksi.
 
+## Contoh project
+
+Repository ini berisi dua contoh API mahasiswa yang dapat dipelajari secara berurutan:
+
+### `01.rest-mahasiswa`
+
+Contoh REST API dasar menggunakan Node.js dan Express. Data mahasiswa disimpan sementara di memori, sehingga perubahan data akan hilang saat server dimulai ulang. Contoh ini memperkenalkan routing dan operasi CRUD (`GET`, `POST`, `PUT`, `PATCH`, dan `DELETE`), serta pengujian dengan Postman dan Chrome DevTools.
+
+Petunjuk instalasi, menjalankan server, contoh request, dan pemeriksaan response tersedia di [README 01.rest-mahasiswa](./01.rest-mahasiswa/README.md).
+
+### `02.crud-api-mahasiswa`
+
+Contoh CRUD API yang lebih lengkap menggunakan Node.js, Express, dan PostgreSQL. Kode dipisah menjadi route, controller, middleware, repository, dan konfigurasi database. Project ini juga mencakup validasi input, konfigurasi melalui `.env`, serta pengujian koneksi database.
+
+Route API menggunakan prefix `/api/mahasiswa` dan mendukung `GET /`, `GET /:id`, `POST /`, `PUT /:id`, `PATCH /:id`, dan `DELETE /:id`. Route DELETE saat ini melakukan **hard delete**; repository memiliki method soft delete, tetapi belum dihubungkan ke route. Petunjuk setup PostgreSQL, struktur folder, konfigurasi, dan pengujian Postman tersedia di [README 02.crud-api-mahasiswa](./02.crud-api-mahasiswa/README.md).
+
 ## Membuat dan mengimplementasikan API
 
-Pembuatan API dimulai dengan mengenali kebutuhan aplikasi dan data yang akan dikelola. Setelah itu, tentukan resource dan endpoint, pilih HTTP method yang sesuai, lalu tetapkan bentuk request, response, dan status HTTP.
-
-Contoh API mahasiswa menggunakan resource `/mahasiswa`:
-
-| Method | Endpoint | Kegunaan |
-| --- | --- | --- |
-| `GET` | `/mahasiswa` | Mengambil daftar mahasiswa |
-| `GET` | `/mahasiswa/:id` | Mengambil mahasiswa berdasarkan ID |
-| `POST` | `/mahasiswa` | Menambahkan mahasiswa |
-| `PUT` | `/mahasiswa/:id` | Mengganti seluruh data mahasiswa |
-| `PATCH` | `/mahasiswa/:id` | Mengubah sebagian data mahasiswa |
-| `DELETE` | `/mahasiswa/:id` | Menghapus mahasiswa |
-
-Implementasi endpoint mencakup penerimaan request, validasi data, pemrosesan operasi, dan pengiriman response JSON dengan status HTTP yang tepat. Contoh implementasi dapat dilihat di [01.rest-mahasiswa](./01.rest-mahasiswa/README.md). Jalankan server dan coba endpoint-nya menggunakan Postman sesuai petunjuk pada README tersebut.
+Pembuatan API dimulai dengan mengenali kebutuhan aplikasi dan data yang akan dikelola. Setelah itu, tentukan resource dan endpoint, pilih HTTP method yang sesuai, lalu tetapkan bentuk request, response, dan status HTTP. Contoh-contoh di atas memperlihatkan tahapan dari API sederhana dengan penyimpanan sementara hingga CRUD API dengan database relasional.
 
 ## Integrasi payment gateway Midtrans
 
